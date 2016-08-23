@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html dir="ltr">
+    
+    <head>
+        <title>RI Apps (Dojo)</title>
+        <style type="text/css">
+            body, html { font-family:helvetica,arial,sans-serif; font-size:90%; }
+        </style>
+        <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"
+        djConfig="isDebug: true, parseOnLoad: false">
+        </script>
+
+        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/claro/claro.css"
+        />
+        <style type="text/css">
+            html, body { width: 100%; height: 100%; margin: 0; }
+        </style>
+        <link type="text/css" rel="stylesheet" href="css/RtStart.css">
+         <script type="text/javascript" src="js/RtStart.js"></script>
+         <!--<script type="text/javascript" src="js/RtStartPanel.js"></script>-->
+        <script type="text/javascript" src="js/dojoRtStartPanel.js"></script>
+        <script type="text/javascript">
+        dojo.require("dijit.layout.BorderContainer");
+        dojo.require("dijit.layout.ContentPane");
+        dojo.require("dijit.Tree");
+
+        var init = function(){
+            var bc = new dijit.layout.BorderContainer("","uiContainer")
+            
+            var cp0 = new dijit.layout.ContentPane({
+            id: "top",
+            region: "top",
+            style: "width:30%",
+            content: 'RI SM Whiteboard:'
+            });
+            bc.addChild(cp0);
+            
+            var cp1 = new dijit.layout.ContentPane({
+            id: "1",
+            region: "leading",
+            splitter: "true",
+            style: "width:30%",
+            content: "Left",
+            
+            });
+            bc.addChild(cp1);
+            
+            var cp2 = new dijit.layout.ContentPane({
+            id: "2",
+            region: "center",
+            style: "width:30%",
+            content: "Left"
+            });
+            bc.addChild(cp2);
+            
+            var cp3 = new dijit.layout.ContentPane({
+            id: "3",
+            region: "trailing",
+            splitter: "true",
+            style: "width:30%",
+            content: "Right"
+            });
+            bc.addChild(cp3);
+            
+            var cp4 = new dijit.layout.ContentPane({
+            id: "4",
+            region: "bottom",
+            splitter: "true",
+            style: "height:50%",
+            content: "Text Area"
+            });
+            bc.addChild(cp4);
+            
+            bc.startup();
+            console.log("document ready!");
+            
+            smPoll();
+        };
+        
+        dojo.ready(init);
+        </script>
+    </head>
+    
+    
+    <body class=" claro ">
+        <div id="uiContainer" style="width: 100%; height: 95%;">
+        ...
+        </div>
+<!-- DEVELOPMENT CODE  -->
+    <div style="position:absolute; bottom:0; right:0%" >
+     <input type="button" class="menuButn" onclick="smPoll()"  value="SM Poll" style="position:absolute right:0%"/>
+</div>
+    </body>
+</html>

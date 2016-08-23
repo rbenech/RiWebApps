@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Dojo Example</title>
+<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojo/dojo.xd.js"></script>
+<!-- <applet archive=GlassLens.jar code="ri.core.experiment.GbgSelectionDemo.class" width=480 height=340> </applet>  -->
+<!-- <applet  code="ri.core.panel.GlassLens2.class" width=480 height=340> </applet> -->
+<!-- <applet codebase="C:/pgms/workspace/Riapps" code="ri.core.panel.GlassLens2.class" width=480 height=340> </applet> -->
+<!-- -- > 
+<object type="application/x-java-applet" height="300" width="550">
+  <param name="code" value="ri.core.panel.GlassLens2.class" />
+  <param name="archive" value="GlassLens.jar" />
+  <!-- <param name="java_arguments" value="-Djnlp.packEnabled=true"/> -- >
+  Applet failed to run.  No Java plug-in was found.
+</object>
+<!-- -- >
+<object type="application/x-java-applet" height="300" width="550">
+  <param name="code" value="ri.experiment2.TestSM" />
+  <param name="archive" value="TestSM.jar" />
+  Applet failed to run.  No Java plug-in was found.
+</object>
+-->
+ 
+<!-- <script>
+  dojo.require("dojo.fx"); //Require in the dojo.fx module
+  dojo.ready(function(){ //dojo.ready waits for both the DOM and all dependencies
+    dojo.byId("greeting").innerHTML += ", from " + dojo.version;
+    dojo.fx.slideTo({ top: 100, left: 200, node: dojo.byId("greeting") }).play(); //slide the greeting
+  });    
+</script>
+-->
+
+<!-- function step1() { document.getElementById("div1")= '<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojo/dojo.xd.js"></script>'; } -->
+<script>
+
+function step1() { //point to the dojo libraries
+  //TODO: cross site load from js
+}
+
+function step2() {  //Require in the dojo.fx module
+  dojo.require("dojo.fx");
+}
+
+function step3() { //slide the greeting
+  dojo.byId("greeting").innerHTML += ", from " + dojo.version;
+  dojo.fx.slideTo({ top: 100, left: 200, node: dojo.byId("greeting") }).play();
+}
+
+</script>
+</head>
+<body>
+  <input type="button" onclick="step1()" value="Step1" />
+  <input type="button" onclick="step2()" value="Step2" />
+  <input type="button" onclick="step3()" value="Step3" />
+  <h1 id="greeting">Hello</h1>
+  <div id="div1"></div>
+</body>
+</html>

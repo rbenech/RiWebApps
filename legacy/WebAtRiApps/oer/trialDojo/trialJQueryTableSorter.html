@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JQuery TableSorter Example</title>
+    <link rel="stylesheet" href="css/riapps.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="css/print.css" type="text/css" media="print">
+
+    <script src="js/modernizr-1.5.min.js"></script>
+    <script src="js/jquery-1.6.js"></script>
+    <script src="js/reflection.js"></script>
+    <script src="js/jquery.tablesorter.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"
+        djConfig="parseOnLoad: true">
+        </script>
+        <script type="text/javascript">
+            dojo.require("dojox.layout.FloatingPane");
+
+            var consolePane;
+            var runPane;
+
+            dojo.addOnLoad(function() {
+                consolePane = new dojox.layout.FloatingPane({
+                    title: "Console",
+                    resizable: true,
+                    dockable: true,
+                    style: "position:absolute;top:10px;left:500px;width:300px;height:320px;visibility:hidden;",
+                    id: "consolePane"
+                },
+                dojo.byId("consolePane"));
+
+                consolePane.startup();
+                
+                runPane = new dojox.layout.FloatingPane({
+                    title: "Last App...",
+                    resizable: true,
+                    dockable: true,
+                    style: "position:absolute;top:350px;left:500px;width:300px;height:280px;visibility:hidden;",
+                    id: "runPane"
+                },
+                dojo.byId("runPane"));
+
+                consolePane.startup();
+                runPane.startup();
+            });
+        </script>
+        
+        <!--<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dijit/themes/claro/claro.css"
+        />-->
+
+        <style type="text/css">
+            @import "http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojox/layout/resources/FloatingPane.css";
+            @import "http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojox/layout/resources/ResizeHandle.css";
+        </style>
+
+    
+ <script type="text/javascript">
+ 
+  function doTableSorterTest() { $("#appList").tablesorter(); }
+
+  function refresh() {
+    document.getElementById("divAppsList").innerHTML=
+      '<table id="appList" class="tablesorter">'+
+        '<thead>'+ 
+          '<tr><th>Last Name</th><th>First Name</th><th>Email</th><th>Due</th><th>Web Site</th></tr>'+ 
+        '</thead> '+
+        '<tbody>'+ 
+          '<tr><td>Smith</td><td>John</td><td>jsmith@gmail.com</td><td>$50.00</td><td>http://www.jsmith.com</td></tr> '+
+          '<tr><td>Bach</td><td>Frank</td><td>fbach@yahoo.com</td><td>$50.00</td><td>http://www.frank.com</td></tr> '+
+          '<tr><td>Doe</td><td>Jason</td><td>jdoe@hotmail.com</td><td>$100.00</td><td>http://www.jdoe.com</td></tr> '+
+          '<tr><td>Conway</td><td>Tim</td><td>tconway@earthlink.net</td><td>$50.00</td><td>http://www.timconway.com</td></tr>'+ 
+        '</tbody>'+ 
+      '</table>'; 
+  }
+ 
+  /**Called on initial load to perform initial setup*/
+  //function doInit() { refresh(); }
+  
+  //window.onload=doInit; //initial setup
+  </script>
+</head>
+
+<body>
+  <center>
+  <div id="divAppsList" align="center" class="divAppsListC">Press Refresh</div>
+
+  <button type="button" onclick="refresh()">Refresh Table</button>
+  <button type="button" onclick="doTableSorterTest()">Apply TableSorter</button>
+  </center>
+</body>
+</html>

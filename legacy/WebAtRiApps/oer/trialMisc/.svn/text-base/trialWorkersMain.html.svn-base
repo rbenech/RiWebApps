@@ -1,0 +1,53 @@
+<html>
+<head>
+  <title>Trial: WebWorkers Main</title>
+<!--Sample webWorker info from IBM: http://www.ibm.com/developerworks/web/library/wa-webworkers/?ca=drs- -->
+
+	<script>
+	
+  var aworker = createWorker(); //create a worker to start with
+
+  /**Creates a worker if none available*/
+  function createWorker(wrkr) {
+    if(wrkr)
+      document.getElementById('messages').innerHTML = 'Error: Worker already exists (command ignored).';
+    else { 
+      wrkr = new Worker("trialWorker1.js");
+      wrkr.onmessage = function(event) { 
+        document.getElementById('messages').innerHTML = '>'+event.data;
+      };
+    }
+    return wrkr;
+  }
+
+  /**Sends the given worker a message*/
+  function sendWorkerMsg(wrkr, msg) {
+    if(wrkr)
+      wrkr.postMessage(msg);
+    else 
+      document.getElementById('messages').innerHTML = 'Error: no worker is available.';
+  }
+
+  /**Terminates the given worker*/
+  function terminateWorker(wrkr) {
+    if(wrkr) {
+      wrkr.terminate;
+      wrkr = null;
+      document.getElementById('messages').innerHTML = 'Worker terminated.';
+    }
+    return wrkr;
+  }
+	</script>
+
+</head>
+
+<body>
+  <div id=messages style="position:absolute; left:10%; top:10%; width:80%; height:80%; border: solid 1px blue">
+  </div>
+  <div id="debugMessages" style="position:absolute; bottom:0"> 
+    <input type="button" onclick="sendWorkerMsg(aworker, 'do this stuff here')"  value="send msg"/>
+    <input type="button" onclick="aworker = terminateWorker(aworker)"  value="terminate"/>
+    <input type="button" onclick="aworker = createWorker(aworker)"  value="create"/>
+  </div>
+</body>
+</html>

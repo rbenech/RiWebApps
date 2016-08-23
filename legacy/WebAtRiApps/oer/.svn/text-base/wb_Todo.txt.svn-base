@@ -1,0 +1,30 @@
+To do items for web based whiteboard project wb.html:                     (1/18/2012 oer)
+
+-TreePane is using dijit.Tree but has these issues:
+  1. needs to do on-click for 'non-leaf' nodes
+  2. needs to expand the top level node by one level upon initial creation
+  
+-ListPane is currently using html list <ul>. Issues:
+  1. It has no concept of 'selected item'.
+  2. Currently using TreePane in its place right now.
+
+-TextPane is using an html 'textarea' but has the following issues:
+  1. If do any typing in there, that panel can no longer be updated (needs to be able to 'clear' that).
+  2. 
+
+-Connection to server only happens on initial load, with fallback from webSocket to polling. Issues are:
+  1. Websocket times out at 3min. Either need a keep-alive ping or else a reconnect scheme.
+  2. Anytime the connection is lost, webSocket should be tried first then polling. That way if a server is restarted that supports Websocket, the connection will auto-upgrade.
+  3. Currently the app checks only whether the browser supports Websocket. If the Server does not support it this is not well handled.
+  4. At some point should just disable polling option? (prob. would need additional effort for our basic polling scheme to scale to a larger type application). 
+  
+-wbSmParse:
+  1. When get createSubscriber: needs to open a new window with a new SM channel instead of the current scheme which replaces the existing.
+  2.
+    
+-Menus: need to be implemented. Both top level pull-down as well as right-click context.
+-Dialogs: need to be implemented.
+-TurtlePanel: needs to be implemented (most likely using SVG).
+-Radio buttons don't display properly in Firefox
+-wbUtil: do some caching on the SM headers emit instead of rebuilding the whole thing each time?
+-Look into using JQuery instead of Dojo.

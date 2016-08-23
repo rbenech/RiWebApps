@@ -1,0 +1,132 @@
+
+/*-------------------------
+  Dataview: worksheet data viewer application
+  History: 
+    5/26/11: initial release
+   ---------------------------*/
+
+var _pollingIsAllowed=true; //true to allow polling to occur, false to completely disable all polling
+var _pollInterval=750; //mS
+var _pollTimer; //timer used to trigger polling events
+var _pollingEnabled=false; //toggled automatically at runtime
+var testNamesHeader = ''; //names for the top of each column
+var dataList = []; //list of data being currently displayed
+var maxDataListLen=40; //max number of data entries to keep around at any one time
+
+/*Creates and returns the XML HTTP Request object. Tries all known ways*/
+function getHttpReqObject() {
+  if(typeof XMLHttpRequest != 'undefined') //for all but Internet Explorer
+    return new XMLHttpRequest(); 
+  try { return new ActiveXObject('Msxml2.XMLHTTP'); } //Internet Explorer has two different ways. Try them both.
+  catch(e) { 
+    try { return new ActiveXObject('Microsoft.XMLHTTP'); } 
+    catch(e) {}
+  } 
+  return false; 
+}
+
+/*Display SM worksheet data in tabular form*/
+function formatSmDataList(smData, adiv) {
+  var len = smData.length;
+  for(var i=0; i<len; i++) { //for each SM
+    var sm = smData[i];
+
+    if(sm.CHANNEL==='Worksheet') {} //only deal with data for this sm channel
+    else break;
+
+    var msgs = sm.MSGS; //array of messages, each has an array of sub messages
+    var msgsCnt = msgs.length;
+    for(var j=0; j<msgsCnt; j++) { //for each entry (e.g. data,val1,val1,...)
+      var submsg = msgs[j]; 
+      var subCnt = submsg.length;
+      if(subCnt < 1) break; //nothing to do on this one
+      var cmd = submsg[0]; //e.g. clear, cleardata, testnames, units, data
+      switch(cmd) {
+        case 'clear': //clear data and headers
+          testNamesHeader='';
+          while(dataList.length > 0) { dataList.pop(); } //clear out the array
+          break;
+        
+        case 'cleardata': //clear data only
+          while(dataList.length > 0) { dataList.pop(); } //clear out the array
+          break;
+          
+        case 'testnames': //set the header values
+          testNamesHeader = '<tr>';
+          for(var k=1; k<subCnt; k++) { //for each sub-msg (not including cmd)
+            testNamesHeader += ('<td>' + submsg[k] + '</td>'); 
+          }
+          testNamesHeader += '</tr>';
+          break;
+        
+        case 'units': //set the test data units
+          //TODO
+          break;
+        
+        case 'data': //set received data
+          var color='#0033FF'; //blue data color
+          var anEntry='<tr>';
+          for(var k=1; k<subCnt; k++) { //for each sub-msg (not including cmd)
+            anEntry+='<td>';
+            if(k===0) anEntry+='<strong>';
+            anEntry+=submsg[k];
+            if(k===0) anEntry+='</strong>';
+            anEntry+='</td>';
+          }
+          anEntry+='</tr>';
+          dataList.push('<span style="color:'+color+'">'+anEntry+'</span>'); //add it to the list
+          while(dataList.length > maxDataListLen) { dataList.shift(); } //remove all the oldest data entries
+          break;
+      } //switch
+    } //for
+  } //for
+
+  //fill in the html table:
+  var a=''; //this is where the output html is assembled
+  a+='<table border="1" align="center"> ';
+  a+= testNamesHeader; //first line is the testnames
+  for(ndx in dataList) { a += dataList[ndx]; }
+  a+='</table>';
+  adiv.innerHTML = a;
+}
+
+/**Continues the poll timer for the next iteration*/
+function setPollTimer() {
+  if(_pollingIsAllowed)
+    _pollTimer = setTimeout("pollIt()", _pollInterval);
+}
+
+/**Starts the polling timer*/
+function startPolling() {
+  if(_pollingIsAllowed) {
+    _pollingEnabled = true;  
+    setPollTimer();
+  }
+}
+ 
+/**Stops the polling timer*/
+function stopPolling() {
+  _pollingEnabled = false; //when timer fires, if disabled then is simply ignored in pollIt function and not reset
+}
+
+/*Query and load SM data from server*/
+function pollIt() {
+  if(_pollingEnabled===false) return; //i.e. polling was turned off after timer had already been set. 
+  var xhr = getHttpReqObject();
+  xhr.open('GET',  '/guru/sm?', true);
+  xhr.setRequestHeader('Accept', 'application/json');
+  xhr.onreadystatechange = function() {
+    if(xhr.readyState===4) { //0=Uninitialized, 1=Loading, 2=Loaded, 3=Interactive, 4=Completed
+      if(xhr.status===200) { //received ok
+        var resp = xhr.responseText;
+        if(resp && resp.length>0) {
+          var adiv = document.getElementById("adiv");
+          formatSmDataList(eval(resp), adiv);
+          if(_pollingEnabled) { setPollTimer(); } //reset timer for next iteration
+        }
+      }
+      else alert('-->Error:: '+xhr.statusText); //error occurred
+    }
+  }
+  xhr.send(null);
+}

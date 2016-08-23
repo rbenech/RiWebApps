@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RI Web UI</title>
+
+  <link type="text/css" rel="stylesheet" href="../oer/wb.css">
+  <link type="text/css" rel="stylesheet" href="../oer/ristring.css">
+
+  <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dojo/dojo.xd.js"
+        djConfig="parseOnLoad: true"></script>
+
+  <script src="../oer/websocket.js"></script> <!-- include this to enable websockets -->
+  <script src="../oer/ajax.js"></script>      <!-- include this to enable ajax/polling -->
+  <script src="../oer/wbUtil.js"></script>    <!-- miscellaneous support functions -->
+  <script src="../oer/wbPanel.js"></script>    <!-- whiteboard application -->
+  <script src="../oer/wbPanelDojo.js"></script>   <!-- dojo whiteboard application -->
+
+  <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/claro/claro.css">
+
+
+
+    <style type="text/css">
+    @import url("http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/widget/Portlet/Portlet.css");
+    @import url("http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/layout/resources/GridContainer.css");
+    @import url("http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/widget/Calendar/Calendar.css");
+    @import url("http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/layout/resources/ExpandoPane.css");
+    .dndDropIndicator { border: 2px dashed #99BBE8; cursor:default; margin-bottom:5px;
+    }
+
+    body, html { width:100%; height:100%; margin:0; padding:0; overflow:hidden; }
+    #uiContainer { width:100%; height:100% }
+
+</style>
+
+    <script type="text/javascript">
+    dojo.require("dijit.layout.BorderContainer");
+    dojo.require("dijit.layout.ContentPane");
+    dojo.require("dojox.layout.GridContainer");
+    dojo.require("dojox.widget.Portlet");
+    dojo.require("dijit.form.DropDownButton");
+    dojo.require("dijit.TooltipDialog");
+    dojo.require("dojox.layout.FloatingPane");  //Desktop like UI with Taskbar along bottom
+    dojo.require("dojox.layout.ExpandoPane"); //console
+      </script>
+
+</head>
+
+  <body class=" claro ">
+
+  <div id='uiContainer' dojoType="dijit.layout.BorderContainer" design="headline" gutters="false"
+    liveSplitters="true" style="width: 100%; height: 100%;">
+
+    <div id='wb1Pane' dojoType="dojox.layout.FloatingPane" title="Whiteboard (id=wb1)",
+        resizable="true" dockable="true">
+      <div id='wb1' dojoType="dijit.layout.ContentPane" content="center" style="width: 98%; height: 98%;" >
+      New Whiteboard Channel 'aaa'
+      </div>
+    </div>
+
+    <div id="console" dojoType="dojox.layout.ExpandoPane" title="Console"
+    splitter="true" region="bottom" slidefrom="bottom" style="height: 100px;">
+      <!-- These are for debug messaging: -->
+      <div id="divSent"   style="position:absolute; bottom:40px"></div>
+      <div id="divRecvd"  style="position:absolute; bottom:20px"></div>
+      <div id="divStatus" style="position:absolute; bottom:0px"></div>
+      <div style="position:absolute; bottom:0; right:0%" >
+      <input type="button" onclick="doInit()"  value="re-init"/>
+      </div>
+    </div>
+
+  </div> <!-- uicontainer /div -->
+
+
+</body>
+</html>

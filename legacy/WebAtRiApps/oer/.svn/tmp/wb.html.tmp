@@ -1,0 +1,39 @@
+<!DOCTYPE html>   
+<html>
+<head>
+  <title>websocket whiteboard</title>
+
+  <link type="text/css" rel="stylesheet" href="wb.css">
+  <link type="text/css" rel="stylesheet" href="ristring.css">
+
+  <!-- Using the dojo up at Google: DEBUG MODE-->
+  <script 
+    src= "http://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojo/dojo.xd.js" 
+    djConfig="isDebug:true,parseOnLoad:true,baseUrl:'./',modulePaths:{dtdg:'dtdg'}" >
+  </script>  
+  
+  <script>
+    //dojo.require("dojo.fx"); //dojo fx module
+    //dojo.require("dojo.parser");
+  </script>
+
+  <script src="websocket.js"></script>  <!-- include this to enable websockets -->
+  <script src="ajax.js"></script>       <!-- include this to enable ajax/polling -->
+  <script src="wbUtil.js"></script>     <!-- whiteboard miscellaneous support functions -->
+  <script src="wbSmParse.js"></script>  <!-- whiteboard parsing -->
+  <script src="wbWidgetsDojo.js"></script>  <!-- whiteboard DOJO widgets -->
+</head>
+
+<body>
+
+  <div id="debugMessages" style="position:absolute; bottom:0"> <!-- debug related stuff -->
+    <input type="button" onclick="doInit()"  value="re-init"/> <!-- to re-initialize the application: connections etc. -->
+    <input type="button" onclick="setSmChannel()" value="set channel:" /> <!--sets the sm channel being monitored--> 
+    <input type="text" id="mySmChannel" value="" />
+    <input type="button" onclick="doSubscribe()"  value="subscribe:"/> <!-- to subscribe to a model/view -->
+    <input type="text" id="subscribeTo" value="transcript" />
+    <span id="divStatus"></span> <!-- This can be left off if don't want to see status messages-->
+  </div>
+  
+</body>
+</html>

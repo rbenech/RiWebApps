@@ -1,0 +1,66 @@
+<!doctype html>
+
+<!-- 
+  Example Geolocation demo from CodeProject.com article on 6/20/2012: 
+  http://www.codeproject.com/Articles/347732/12-Cool-HTML5-Geolocation-Ideas
+  -->
+
+  <html lang="en">
+  <head>
+    <title>Geolocation demo</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <h1>Geolocation demo</h1>
+    <p>Find out approximately where you are.</p>
+    <p>Step 1: <button onclick="GetMap()">Show map</button></p>
+    <p>Step 2: When prompted, allow your location to be shared to see Geolocation in action</p>
+    
+    <div id="mapDiv" style="position: relative; width: 800px; height: 600px;"></div>
+    <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+    <script type="text/javascript">
+      var map = null;
+      function GetMap() {
+        var cred = "YOUR_BING_MAPS_KEY"; //Replace 'YOUR_BING_MAPS_KEY' with your own credentials. Obtain a key by signing up for a developer account at http://www.microsoft.com/maps/developers/
+        map = new Microsoft.Maps.Map(document.getElementById("mapDiv"), { credentials: cred }); //Initialize map
+        if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(locateSuccess, locateFail); }
+        else { alert('I\'m sorry, but Geolocation is not supported in your current browser. Have you tried running this demo in IE9?'); }
+      }
+      
+      /**Successful geolocation*/
+      function locateSuccess(loc) {
+        var userLocation = new Microsoft.Maps.Location(loc.coords.latitude, loc.coords.longitude); //set the user's location
+        map.setView({ center: userLocation, zoom: 17 }); //zoom in on user's location on map
+        var locationArea = drawCircle(userLocation); //draw circle of area where user is located
+        map.entities.push(locationArea);
+      }
+      
+      /**Unsuccessful geolocation*/
+      function locateFail(geoPositionError) {
+        switch (geoPositionError.code) {
+          case 0: alert('An unknown error occurred, sorry'); break;                    //UNKNOWN_ERROR
+          case 1: alert('Permission to use Geolocation was denied'); break;            //PERMISSION_DENIED
+          case 2: alert('Couldn\'t find you...'); break;                               //POSITION_UNAVAILABLE
+          case 3: alert('The Geolocation request took too long and timed out'); break; //TIMEOUT
+          default:
+        }
+      }
+      
+      // Draw blue circle on top of user's location
+      function drawCircle(loc) {
+        var radius=100, R=6378137, lat=(loc.latitude*Math.PI)/180, lon=(loc.longitude*Math.PI)/180, d=parseFloat(radius)/R;
+        var locs = new Array();
+        for(var x=0; x<=360; x++) {
+          var p = new Microsoft.Maps.Location();
+          brng = x*Math.PI/180;
+          p.latitude = Math.asin(Math.sin(lat) * Math.cos(d) + Math.cos(lat) * Math.sin(d) * Math.cos(brng));
+          p.longitude = ((lon + Math.atan2(Math.sin(brng)*Math.sin(d)*Math.cos(lat), Math.cos(d) - Math.sin(lat)*Math.sin(p.latitude)))*180)/Math.PI;
+          p.latitude = (p.latitude*180)/Math.PI;
+          locs.push(p);
+        }
+        return new Microsoft.Maps.Polygon(locs, { fillColor: new Microsoft.Maps.Color(125, 0, 0, 255), strokeColor: new Microsoft.Maps.Color(0, 0, 0, 255) });
+      }
+    </script>
+</body>
+</html>

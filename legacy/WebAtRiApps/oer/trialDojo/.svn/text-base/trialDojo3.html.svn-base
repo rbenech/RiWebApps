@@ -1,0 +1,33 @@
+<html>
+<head>
+  <title>Dojo Trial3</title>
+
+ <!-- Using the dojo up at Google: DEBUG MODE-->
+  <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojo/dojo.xd.js"
+          djConfig="isDebug:true,parseOnLoad:true" >
+  </script>
+
+	<script>
+	  dojo.require("dojo.fx"); //dojo fx module
+	  dojo.require("dojox.xml.DomParser");
+	</script>
+
+</head>
+
+<body>
+  <script>
+    dojo.ready(function() { //dojo.ready waits for both the DOM and all dependencies
+      var xml='<!--?xml version="1.0"?-->'
+        + '<root><node>My first node</node>'
+        + '<node>My other node</node>'
+        + '</root>';
+      var doc=dojox.xml.DomParser.parse(xml);
+      console.log(doc);
+      document.body.appendChild(doc); //add this element to the page
+      
+    }); 
+  </script>
+
+  This is a quick and dirty file for console-based development.
+</body>
+</html>

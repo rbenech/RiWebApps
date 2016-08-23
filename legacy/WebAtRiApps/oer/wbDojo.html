@@ -1,0 +1,81 @@
+<!DOCTYPE html>   
+<html>
+<head>
+  <title>Dojo Whiteboard</title>
+
+  <link type="text/css" rel="stylesheet" href="wb.css">
+  <link type="text/css" rel="stylesheet" href="ristring.css">
+  <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/claro/claro.css">
+
+
+  <script src="websocket.js"></script>  <!-- include this to enable websockets -->
+  <script src="ajax.js"></script>       <!-- include this to enable ajax/polling -->
+  <script src="wbUtil.js"></script>     <!-- whiteboard miscellaneous support functions -->
+  <script src="wbSmParse.js"></script>  <!-- whiteboard parsing -->
+  <script src="wbWidgetsDojo.js"></script>  <!-- whiteboard DOJO widgets -->
+  
+
+  <!-- Using the dojo up at Google: DEBUG MODE-->
+  <script 
+    src= "http://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojo/dojo.xd.js" 
+    djConfig="isDebug:true,parseOnLoad:true,baseUrl:'./',modulePaths:{dtdg:'dtdg'}" >
+  </script>  
+  
+    <script>
+    //dojo.require("dojo.fx"); //dojo fx module
+    //dojo.require("dojo.parser");
+    /*DOJO Init*/
+      dojo.require("dojox.layout.FloatingPane");
+      dojo.require("dijit.layout.ContentPane");
+ 
+      var wb;
+      dojo.addOnLoad(function(){
+                wb = new dojox.layout.FloatingPane({
+                  title: "SM Channel: aaa",
+                  resizable: true,
+                  closable: false,
+                  dockable: true,
+                  style: "position:absolute;top:1;left:1;width:500px;height:300px;",
+                  id: "wb_root"
+                  },
+        dojo.byId("wb"));
+        wb.startup();
+        dijit.byid("wb_root").innerHTML = "Listening to Channel " + _mySmChannel
+        });
+  </script>
+  
+  
+    <style type="text/css">
+    @import url("http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/widget/Portlet/Portlet.css");
+    @import url("http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/layout/resources/GridContainer.css");
+    @import url("http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/widget/Calendar/Calendar.css");
+    @import url("http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/layout/resources/ExpandoPane.css");
+    @import url("http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/layout/resources/FloatingPane.css");
+    @import url("http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/layout/resources/ResizeHandle.css");
+    
+    .dndDropIndicator { border: 2px dashed #99BBE8; cursor:default; margin-bottom:5px;
+    }
+
+    body, html { width:100%; height:100%; margin:0; padding:0; overflow:hidden; }
+    #uiContainer { width:100%; height:100% }
+
+</style>
+  
+</head>
+
+
+<body class=" claro ">
+  
+  <div id="wb">Loading...</div>
+
+  <div id="debugMessages" style="position:absolute; bottom:25px"> <!-- debug related stuff -->
+    <input type="button" onclick="doInit()"  value="re-init"/> <!-- to re-initialize the application: connections etc. -->
+    <input type="button" onclick="setSmChannel()" value="set channel:" /> <!--sets the sm channel being monitored--> 
+    <input type="text" id="mySmChannel" value="" />
+    <input type="button" onclick="doSubscribe()"  value="subscribe:"/> <!-- to subscribe to a model/view -->
+    <input type="text" id="subscribeTo" value="transcript" />
+    <span id="divStatus"></span> <!-- This can be left off if don't want to see status messages-->
+  </div>
+  
+</body>
+</html>

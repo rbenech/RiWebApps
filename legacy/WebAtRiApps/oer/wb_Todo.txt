@@ -1,0 +1,55 @@
+To do items for web based whiteboard project wb.html:    (6/3/2012 oer)
+
+-Background fetch: 
+	-put the objects in a set to limit mutiple fetches of same file.
+	-Do an attributes query for the file instead of objRetrieve. Only fetch if newer
+	-do something about KV, KR type queries as well
+
+-Get rid of [object Object] in panels. Make rawSm and sm servlets work same way
+
+-fix PanelPane (broken since Whiteboard object was added):
+  TODO: RtWidget_PanelPane needs to make a TurtlePanel object with itself as the parent. note: The only callback is 'emitSmEvent'.
+
+-Do unsubscribe when windows close 
+
+-Fix it so web wb it doesn't respond when java wb does a subscribe
+
+-Implement Dialogs
+
+-Implement Menus: Both top level pull-down as well as right-click context.
+
+-Elim broadcasts and do src<->dst reversal instead
+
+-Finish ListPane. Currently using html list <ul>. Issues:
+  o It has no concept of 'selected item'.
+  o Currently using TreePane in its place right now.
+
+-TextPane is using an html 'textarea' but has the following issues:
+  o If do any typing in there, that panel can no longer be updated (needs to be able to 'clear' that).
+
+-Connection to server, with fallback from webSocket to polling. Issues are:
+  o Currently the app checks only whether the browser supports Websocket. If the Server does not support it this is not well handled.
+  o At some point should just disable polling option? (prob. would need additional effort for our basic polling scheme to scale to a larger type application). 
+
+-wbUtil: do some caching on the SM headers emit instead of rebuilding the whole thing each time?
+
+
+
+Done:
+--------------------
+6/1:
+-Open new whiteboards in new browser windows (added Whiteboard constr)
+-stop updating html value of subscribeTo etc.
+-checkbox for positionNewWindows
+-reconnect webSkt if closed
+-Added a verbose checkbox
+-fix scrollbars in tree widget. (style had an extra double quote)
+-Issue: Radio buttons don't show their labels: put button and label into a div
+-Dojo Tree only emits for leaf nodes: changed openOnClick to false
+-Added 'expand messages' checkbox
+
+6/3:
+-Fixed the widget confusion bug: added smChannel to dojo publish channel for widgets
+-Each new whiteboard should open into a different location
+-Auto start RiWebBrowser when Guru starts up
+-Created RiWebServer (no debug) for All operating systems

@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>SVG Experiment 2</title>
+</head>
+<body>
+
+<!-- SVG -->
+<?xml version="1.0"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+
+</body>
+SVG Experiment 2: Programmatic version <br />
+
+<script>
+
+  var createSvgElement = function(svgType, attribs, textContent) {
+    var elem = document.createElementNS("http://www.w3.org/2000/svg", svgType);
+    for(var ndx in attribs)
+      elem.setAttribute(ndx, attribs[ndx]);
+    if(textContent)
+      elem.textContent=textContent; //specific to text content
+    return elem;
+  }
+
+  var svgElem = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svgElem.setAttribute("version", "1.2");
+  svgElem.setAttribute("baseProfile", "tiny");
+  document.body.appendChild(svgElem); //append the new element
+
+
+  svgElem.appendChild(createSvgElement('circle', { cx:'70', cy:'95', r:'50', style:'stroke: black; fill: none;'} ));
+  svgElem.appendChild(createSvgElement('circle', { cx:'55', cy:'80', r:'5',  style:'stroke:black; fill:#339933'} ));
+  svgElem.appendChild(createSvgElement('circle', { cx:'85', cy:'80', r:'5',  stroke:'black', fill:'#339933'} ));
+  var gElem = createSvgElement('g', { id:'whiskers'} );
+  svgElem.appendChild(gElem);
+  gElem.appendChild(createSvgElement('line', {  'x1':'75', 'y1':'95', 'x2':'135', 'y2':'85',  'style':'stroke: black;'} ));
+  gElem.appendChild(createSvgElement('line', {  x1:'75', y1:'95', x2:'135', y2:'105', style:'stroke: black;'} ));
+  
+  var useElem = createSvgElement('use', { transform:'scale(-1 1) translate(-140 0)'} );
+  useElem.setAttributeNS("http://www.w3.org/1999/xlink", 'href', '#whiskers'); //set attribute xlink:href="#whiskers". Note: xlink means XML linking language
+  svgElem.appendChild(useElem);
+  
+  svgElem.appendChild(createSvgElement('polyline', {  points:'108 62, 90 10, 70 45, 50, 10, 32, 62', style:'stroke: black; fill: none;'} )); //ears
+  svgElem.appendChild(createSvgElement('polyline', {  points:'35 110, 45 120, 95 120, 105, 110', style:'stroke: black; fill: none;'} )); //mouth
+  svgElem.appendChild(createSvgElement('path', {  d:'M 75 90 L 65 90 A 5 10 0 0 0 75 90', style:'stroke: black; fill: #ffcccc'} )); //nose
+  svgElem.appendChild(createSvgElement('text', { x:60, y:165}, 'Tabby'));
+  svgElem.appendChild(createSvgElement('text', {  x:'60', y:'185', style:'font-family: sans-serif; font-size: 14pt; stroke: none; fill: black;'}, 'Cat'));
+</script>
+</html>

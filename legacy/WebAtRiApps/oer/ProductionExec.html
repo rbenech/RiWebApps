@@ -1,0 +1,193 @@
+<!DOCTYPE html>   
+<html>
+<head>
+  <title>Production Control</title>
+  
+  <!-- ---------------------------------------------------------------------------
+     
+    Main html file for the production test executive (ProductionExec) application
+
+    History:
+      -5/17/12: created by rjb.
+    --------------------------------------------------------------------------- -->
+
+  <link type="text/css" rel="stylesheet" href="wb.css">
+  <link type="text/css" rel="stylesheet" href="ristring.css">
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/tundra/tundra.css" media="screen">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+  <script src="websocket.js"></script>  <!-- include this to enable websockets -->
+  
+
+  <!-- Using the dojo up at Google-->
+  <script 
+    src= "http://ajax.googleapis.com/ajax/libs/dojo/1.7.2/dojo/dojo.js" 
+    djConfig="async:true, parseOnLoad:true" >
+  </script>  
+  
+    <script>
+      require(["dijit/layout/BorderContainer","dijit/layout/ContentPane", "dojo/parser"]);
+  </script>
+  
+  <script src="websocket.js"></script>     <!-- include this to enable websockets -->
+  <script src="riri.js"></script>          <!-- RIRI and SM support -->
+  <script src="wbUtil.js"></script>        <!-- miscellaneous support functions (from whiteboard) -->
+  <script src="ProductionExec.js"></script> <!-- main functionality -->
+  
+<style type="text/css">
+    .ri-label {color: #3B485B; text-align: right;}
+    .ri-background { background: #C7CCC8 }
+    .ri-button { color: #000000 }
+    legend {color: #3B485B }
+    
+    body, html { width:100%; height:100%; margin:0; padding:0; overflow:hidden; font-family: 'Open Sans',sans-serif }
+ 
+    #appLayout {
+        height: 100%;
+    }
+    
+    button: {rgb(128,133,129); } /* Old browsers */
+    button: {linear-gradient(-45deg, rgb(128,133,129) 0%,rgb(255,255,255) 100%);
+              width: 10em; height: 5em;}/* W3C */
+</style>
+
+</head>
+<body class="tundra">
+ 
+  <div id="appLayout" class="control" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar'" class="ri-background">
+      <div id="top1" class="infoPane" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'top', splitter:true" style="height: 10em">
+        <div class="bcTop1" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline'">
+          <div id="leftUpperPanel" class="infoPane" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'left'" class="ri-background">
+            <form id="userInfo">
+              <fieldset>
+                <legend>User Information</legend>
+                <table id="userInfo">
+                  <tr>
+                    <td class="ri-label">User ID:</td><td>Operator</td>
+                  </tr>
+                  <tr>
+                    <td class="ri-label">Last Login Date:</td><td>Apr-14 2010</td>
+                  </tr>
+                  <tr>
+                    <td class="ri-label">Last Login Time:</td><td>14:33:04</td>
+                  </tr>
+                </table>
+              </fieldset>
+            </form>
+          </div>
+          <div id="middleUpperPanel" class="infoPane" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'center'"
+               style="height: 50%" class="ri-background"> 
+            <form id="testMode">
+              <fieldset>
+                <legend>Test Mode</legend>
+                <input id="testModeProd" type="radio" name="testMode" value="Production Test" checked/> Production Test Mode<br />
+                <input id="testModeEng" type="radio" name="testMode" value="Engineering Test" /> Engineering Test Mode<br />
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div id="top2" class="infoPane" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'top', splitter:true" style="height: 14em">
+        <div class="bcTop2" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline'" style="width: 30%">
+          <div id="leftMiddlePanel" class="infoPane" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'left'">
+            <form id="lotInfo">
+              <fieldset>
+                <legend>Lot Information</legend>
+
+                <table id="lotInfo">
+                  <tr>
+                    <td class="ri-label">Device:</td><td><input type="text" id="device"/></td>
+                  </tr>
+                            <tr>
+                    <td class="ri-label"> Lot:</td><td><input type="text" id="lot"/></td>
+                  </tr>
+                  <tr>
+                    <td class="ri-label">Wafer:</td><td><input type="text" id="wafer"/></td>
+                  </tr>
+                                                <tr>
+                    <td class="ri-label">Lot Size:</td><td><input type="text" id="lotSize"/></td>
+                  </tr>
+                </table>
+              </fieldset>
+            </form>
+          </div>
+         
+          <div id="middleCenterPanel" class="infoPane" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'center'">
+            <form id="lotInfo">
+              <fieldset>
+                <legend>Test Time Info</legend>
+                <table id="lotInfo">
+                  <tr>
+                    <td class="ri-label">Tester Time:</td><td>03 hr 63 min 23 sec</td>
+                  </tr>
+                            <tr>
+                    <td class="ri-label">Handler Time:</td><td>06 hr 43 min 23 sec</td>
+                  </tr>
+                  <tr>
+                    <td class="ri-label">Avg. Test Time:</td><td>35 sec/part</td>
+                  </tr>
+                   <tr>
+                    <td class="ri-label">Lot <abbr title="Overall equipment effectiveness (OEE) is a hierarchy of metrics which focus on how effectively the system is utilized.">OEE</abbr>:</td><td>98%</td>
+                  </tr>
+                </table>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+        <div id="rightPanel" class="actionPane" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'right', splitter: true" style="width:7em">
+        <form id="actions">
+              <fieldset>
+                <legend>Actions</legend>
+                <input id="Start Lot"  type="button" onclick="ri.prodexec.doStartLot()"  name="Start Lot"  value="StartLot"/><br />
+                <input id="Begin Step" type="button" onclick="ri.prodexec.doBeginStep()" name="Begin Step" value="BeginStep"/><br />
+                <input id="Pause"      type="button" onclick="ri.prodexec.doPause()"     name="Pause"      value="Pause"/><br />
+                <input id="End Step"   type="button" onclick="ri.prodexec.doEndStep()"   name="End Step"   value="EndStep"/><br />
+                <input id="Print"      type="button" onclick="ri.prodexec.doPrint()"     name="Print"      value="Print"/><br />
+                <input id="Close Lot"  type="button" onclick="ri.prodexec.doCLoseLot()"  name="Close Lot"  value="CloseLot"/><br />
+              </fieldset>
+            </form>
+        </div>
+        <div id="middlePanel" class="testSteps" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center'">
+        <form id="testSteps">
+              <fieldset>
+                <table id="testInfoTable" class="testResults">
+                <legend>Test Steps</legend>
+                <tr>
+                  
+               <td>&nbsp;</td>
+                <td><input id="First Test" type="button" onclick="ri.prodexec.doFirstTest()" name="First Test" value="FirstTest"/></td>
+                <td><input id="Retest1"    type="button" onclick="ri.prodexec.doRetest(1)"   name="Retest #1"  value="Retest1"/></td>
+                <td><input id="Retest2"    type="button" onclick="ri.prodexec.doRetest(2)"   name="Retest #2"  value="Retest2"/></td>
+                <td><input id="Retest3"    type="button" onclick="ri.prodexec.doRetest(3)"   name="Retest #3"  value="Retest3"/></td>
+                <td><input id="QA Test"    type="button" onclick="ri.prodexec.doQaTest()"    name="QA Test"    value="QATest"/></td>
+                <td><input id="QA Retest"  type="button" onclick="ri.prodexec.doQaRetest()"  name="QA Retest"  value="QARetest"/></td>
+         </tr>
+            <tr>
+              <td class="ri-label">Good:</td><td>1,432</td><td>133</td><td>-</td><td>-</td><td>55</td><td>-</td>
+            </tr>
+            <tr><td class="ri-label">Reject:</td><td>370</td><td>50</td><td>-</td><td>-</td><td>5</td><td>-</td>
+            </tr>
+            <tr><td class="ri-label">Yield:</td><td>79.4%</td><td>72%</td><td>-</td><td>-</td><td>91.6%</td><td>-</td>
+            </tr>
+            <tr><td class="ri-label">OEE:</td><td>98%</td><td>88%</td><td>-</td><td>-</td><td>99%</td><td>-</td>
+            </tr>
+        </table>
+          </fieldset>
+            </form>
+        </div>
+          <div id="bottomPanel" class="testSteps" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: true ">
+            <form id="actions">
+              <fieldset>
+                <legend>Messages</legend>
+                <div id="messages">Loading...</div>
+                </textarea>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+  
+</body>
+</html>

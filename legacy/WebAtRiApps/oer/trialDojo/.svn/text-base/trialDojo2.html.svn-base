@@ -1,0 +1,75 @@
+<html>
+<head>
+  <title>Dojo Trial2</title>
+
+  <style type="text/css"> @import "http://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dijit/themes/claro/claro.css"; </style> <!-- for dijit.Editor -->
+
+  <!-- Using the dojo up at Google: DEBUG MODE-->
+  <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojo/dojo.xd.js"
+          djConfig="isDebug:true,parseOnLoad:true" ></script>
+
+<script>
+  dojo.require("dojo.fx"); //dojo fx module
+  //dojo.require("dojo.parser");
+  //dojo.require("dojox.layout.FloatingPane");
+  //dojo.require("dijit.layout.ContentPane");
+  dojo.require("dijit.Editor");
+  dojo.require("dijit._editor.plugins.AlwaysShowToolbar");
+
+  dojo.ready(function() {}); //dojo.ready waits for both the DOM and all dependencies
+  
+  function createEditor(id) {
+//    var elem = new dijit.Editor({
+//      height: '',
+//      extraPlugins: [dijit._editor.plugins.AlwaysShowToolbar]
+//    }, dojo.byId(id));
+    var elem = new dijit.Editor(null, dojo.byId(id));
+    return elem;
+  }
+  
+  function doEditor() {
+    var elem, id, val; //local vars
+    id = "editorDiv";
+    val = "some editor text";
+    elem = document.getElementById(id); 
+//    elem = document.createElement('div');
+//    elem.setAttribute('data-dojo-type', 'dijit.Editor'); //note: dojoType==old way, data-dojo-type==new way
+//    elem.setAttribute('id', id);
+      
+    elem = createEditor(id); //TRIAL
+    //elem.setAttribute('class', 'claro'); //style attribute required for dijit.Editor
+    //document.getElementById(id).appendChild(elem); //append the new element
+    
+    //Set the text:
+    //elem.innerHTML=val || 'any old thing...'; //set the text
+    
+    //Position the editor:
+//    elemStyle = elem.getAttribute('style');
+//    if(elemStyle && elemStyle.length>0) elemStyle+= '; ';
+//    else elemStyle = '';
+//    elemStyle += "position:absolute; left:20%; top:30%; width:40%; height:50%"
+//    elem = document.getElementById("outerDiv"); 
+//    elem.setAttribute('style', elemStyle);
+    
+  }
+      
+</script>
+
+</head>
+
+<body>
+  <div id=outerDiv style="position:absolute; left:20%; top:30%; width:40%; height:50%; border: solid 1px blue">
+    <div class="claro" id=editorDiv></div>
+  </div>
+<!--   
+  <div class="claro" data-dojo-type="dijit.Editor" id="editor1">
+    <p>This instance is created from a div directly with default toolbar and plugins</p>
+  </div>
+
+-->
+
+  <div id="debugMessages" style="position:absolute; bottom:0"> 
+    <input type="button" onclick="doEditor()"  value="editor"/>
+  </div>
+</body>
+</html>

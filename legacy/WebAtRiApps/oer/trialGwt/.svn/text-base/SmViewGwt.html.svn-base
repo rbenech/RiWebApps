@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<!-- Consider inlining CSS to reduce the number of requested files -->
+		<link type="text/css" rel="stylesheet" href="SmView.css">
+		<title>Wrapper HTML for SmView</title>
+		<!--Loads the compiled module. Added GWT meta tags must be added before this line.-->
+		<script language="javascript" src="ri.app.web.SmView/ri.app.web.SmView.nocache.js"></script>
+	</head>
+
+	<!--Body can have arbitrary html. Leave empty for completely dynamic ui-->
+	<body>
+       Ooooorb
+		<!-- OPTIONAL: include this if you want history support -->
+		<iframe id="__gwt_historyFrame" style="width:0;height:0;border:0"></iframe>
+	</body>
+</html>

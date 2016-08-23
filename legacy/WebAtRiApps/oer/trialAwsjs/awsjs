@@ -1,0 +1,52 @@
+#!/bin/sh
+
+# Author - Andrei G
+# email: gmlvsk2@gmail.com
+# Licensed under Mozilla Public License
+# http://www.mozilla.org/MPL/
+
+prog="$0"
+
+while [ -h "$prog" ] ; do
+  ls=`ls -ld "$prog"`
+  link=`expr "$ls" : '.*-> \(.*\)$'`
+  if expr "$link" : '/.*' > /dev/null; then
+    prog="$link"
+  else
+    prog=`dirname "$prog"`/"$link"
+  fi
+done
+
+if [ -n "$AWSJS_HOME" ]
+then
+  base_dir="$AWSJS_HOME"
+else
+  base_dir=`dirname "$prog"`
+fi
+
+if [ ! -d $base_dir/lib ]
+then
+  echo "lib dir with jars missing at:$base_dir"
+  exit
+fi
+
+cp=""
+for f in $(ls $base_dir/lib/*jar)
+do
+  cp="$cp:$f"
+done
+
+if [ -n $JAVA_HOME ]
+then
+  java=$JAVA_HOME/bin/java
+else
+  java=$(which java)
+fi
+
+if [ ! -x $java ]
+then
+  echo "Could not find java executable"
+  exit
+fi
+
+$java -cp "$cp" com.andreig.aws_script.main "$@"

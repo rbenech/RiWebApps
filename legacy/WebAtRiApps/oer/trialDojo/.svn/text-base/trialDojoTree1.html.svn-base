@@ -1,0 +1,30 @@
+<html>
+<!-- This shows use of a Dijit Tree and an expand operation on it -->
+  <head>
+    <style type="text/css"> body, html { font-family:helvetica,arial,sans-serif; font-size:90%; } </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js" djConfig="parseOnLoad: true"> </script>
+    <script type="text/javascript">
+        dojo.require("dojo.data.ItemFileReadStore");
+        dojo.require("dijit.Tree");
+        dojo.require("dijit.form.Button");
+        function selectNode() { mytree.attr('path', ['continentRoot', 'NA', 'MX', 'Guadalajara']); }
+    </script>
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/claro/claro.css" />
+  </head>
+
+  <body class=" claro ">
+    <div dojoType="dojo.data.ItemFileReadStore" jsId="continentStore" url="countries.json"> </div>
+    
+    <div dojoType="dijit.tree.ForestStoreModel" jsId="continentModel" store="continentStore"
+      query="{type:'continent'}" rootId="continentRoot" rootLabel="Continents"
+      childrenAttrs="children">
+    </div>
+    
+    <div dojoType="dijit.Tree" jsId="mytree" openOnClick="true" model="continentModel"
+      showRoot="false" persist="false">
+    </div>
+    
+    <div dojoType="dijit.form.Button" onClick="selectNode();">Highlight Guadalajara</div>
+    
+  </body>
+</html>

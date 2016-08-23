@@ -1,0 +1,35 @@
+<!DOCTYPE html>   
+<html>
+<head>
+  <title>Whiteboard (ajax based)</title>
+
+  <link type="text/css" rel="stylesheet" href="RtStart.css">
+  <link type="text/css" rel="stylesheet" href="ristring.css">
+   
+  <!-- Use the dojo up at Google:-->
+  <script 
+    src= "http://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojo/dojo.xd.js" 
+    djConfig="isDebug:true,parseOnLoad:true,baseUrl:'./',modulePaths:{dtdg:'dtdg'}" >
+  </script>  
+  
+  <script>
+    dojo.require("dojo.fx"); //dojo fx module
+    dojo.require("dojo.parser");
+  </script>
+
+  <script src="ajax.js"></script> <!-- This version uses ajax instead of websocket -->
+  <script src="wbUtil.js"></script>
+  <script src="wbPanel.js"></script>
+</head>
+
+<body>
+  <!-- These are for debug messaging: -->
+  <div id="divSent"   style="position:absolute; bottom:40px">SENT: </div> 
+  <div id="divRecvd"  style="position:absolute; bottom:20px">RECVD: </div>
+  <div id="divStatus" style="position:absolute; bottom:0px">STATUS: </div>
+  <div style="position:absolute; bottom:0; right:0%" >
+    <input type="button" class="menuButn" onclick="smPoll()"  value="SM Poll"/>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Using Echo Websocket Servlet</title>
+  <script>
+  var webSkt;
+
+  function testBrowser() {
+    emitStatus('Testing browser...');
+    if(window.WebSocket)
+      emitStatus('HTML5 Websockets are supported.');
+    else
+      emitStatus('HTML5 Websockets are NOT supported in this browser.');
+  }
+  
+  function openWebsocket() {
+    emitStatus('Opening Websocket...');
+    emitSent('');
+    emitRecvd('');
+    var url = "ws://localhost:7501/guru/echo";
+    webSkt = new WebSocket(url);
+    webSkt.onopen    = function()  { emitStatus('Websocket Opened'); }
+    webSkt.onmessage = function(e) { emitRecvd(e.data); }
+    webSkt.onclose   = function()  { emitStatus('Websocket Closed'); }
+  }
+  
+  function sendIt() {
+    if(!webSkt) {
+      emitStatus('WebSocket not open');
+      emitSent('');
+      emitRecvd('');
+    }
+    else {
+      var msg = document.getElementById('sendData').value;
+      emitSent(msg);
+      webSkt.send(msg);
+    }
+  }
+  
+  function closeWebsocket() {
+    emitStatus('Closing Websocket...');
+    emitSent('');
+    emitRecvd('');
+    webSkt.close();
+    webSkt=null;
+  }
+  
+  function emitSent(msg) { document.getElementById('divSent').innerHTML = 'SENT: '+msg; }
+  
+  function emitRecvd(msg) { document.getElementById('divRecvd').innerHTML = 'RECVD: '+msg; }
+  
+  function emitStatus(msg) { document.getElementById('divStatus').innerHTML = 'STATUS: '+msg; }
+  
+  //window.onload=testIt; //initial setup
+  </script>
+</head>
+
+<body>
+  <h3 align="center">Test Using Echo Websocket Servlet</h3>
+  <br />
+  <button type="button" onclick="testBrowser()">Test Browser</button><br />
+  <button type="button" onclick="openWebsocket()">Open  Websocket</button><br />
+  <button type="button" onclick="sendIt()">Send</button><input type="text" id="sendData" value="I send this to myself." /><br />
+  <button type="button" onclick="closeWebsocket()">Close Websocket</button><br />
+  <hr><br />
+  <div id="divSent">SENT: </div><br /> 
+  <div id="divRecvd">RECVD: </div><br />
+  <div id="divStatus">STATUS: </div><br />
+</body>
+</html>

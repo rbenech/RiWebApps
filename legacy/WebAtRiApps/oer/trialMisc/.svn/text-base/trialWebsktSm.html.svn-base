@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Using SM Websocket Servlet</title>
+
+  <script>
+  var webSkt;
+
+  function testBrowser() {
+    emitStatus('Testing browser...');
+    if(window.WebSocket)
+      emitStatus('HTML5 Websockets are supported.');
+    else
+      emitStatus('HTML5 Websockets are NOT supported in this browser.');
+  }
+  
+  function openWebsocket(url) {
+    emitStatus('Opening Websocket on '+url+'...');
+    emitSent('');
+    emitRecvd('');
+    if(webSkt) webSkt.close(); //just in case
+    webSkt = new WebSocket(url);
+    webSkt.onopen    = function()  { emitStatus('Websocket Opened'); }
+    webSkt.onmessage = function(e) { emitRecvd(e.data); }
+    webSkt.onclose   = function()  { emitStatus('Websocket Closed'); }
+  }
+  
+  function sendIt() {
+    if(!webSkt) {
+      emitStatus('WebSocket not open');
+      emitSent('');
+      emitRecvd('');
+    }
+    else {
+      var msg = document.getElementById('sendData').value;
+      emitSent(msg);
+      webSkt.send(msg);
+    }
+  }
+  
+  function closeWebsocket() {
+    emitStatus('Closing Websocket...');
+    emitSent('');
+    emitRecvd('');
+    webSkt.close();
+    webSkt=null;
+  }
+  
+  function emitSent(msg) { 
+    document.getElementById('divSent').innerHTML = 'SENT: '+msg; 
+  }
+  
+  function emitRecvd(msg) { 
+    document.getElementById('divRecvd').innerHTML = 'RECVD: '+msg; 
+  }
+  
+  function emitStatus(msg) { 
+    document.getElementById('divStatus').innerHTML = 'STATUS: '+msg; 
+  }
+
+  // ------------------------
+  
+  var log = function(s) {
+    if (document.readyState !== "complete")
+      log.buffer.push(s);
+    else
+      document.getElementById("divStatus").innerHTML += (s + "\n")
+  }
+  log.buffer = [];
+
+  window.onload = function() {
+    log(log.buffer.join("\n"));
+    //document.getElementById("testIt").onclick = testIt;
+    //document.getElementById("openIt").onclick = openIt;
+    //document.getElementById("sendIt").onclick = sendIt;
+    //document.getElementById("closeIt").onclick = closeIt;
+  }
+</script>
+</head>
+
+<body>
+  <h3 align="center">Test Using SM Websocket Servlet</h3>
+  <br />
+  <button type="button" onclick="testBrowser()">Test Browser</button><br />
+  <button type="button" onclick="openWebsocket('ws://localhost:7501/guru/sm')">Open SM Websocket</button><br />
+  <button type="button" onclick="openWebsocket('ws://localhost:7501/guru/rawsm')">Open rawSM Websocket</button><br />
+  <!-- <button type="button" onclick="sendIt()">Send</button><input type="text" id="sendData" value="%1cSM%1dSMDST=00000000%1dSMSRC=G72BO9CA%1eBBBGB500%1e%1dSRC=G72BO9CA%1cTrial%1cThe thing%1cThe other thing" /><br />  -->
+  <button type="button" onclick="sendIt()">Send</button><input type="text" id="sendData" value="%1cTrial%1cThe thing%1cThe other thing" /><br />
+  <button type="button" onclick="closeWebsocket()">Close Websocket</button><br />
+  <hr>
+  <br />
+  <div id="divSent">SENT: </div><br /> 
+  <div id="divRecvd">RECVD: </div><br />
+  <div id="divStatus">STATUS: </div><br />
+</body>
+</html>

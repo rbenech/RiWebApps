@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>SVG Experiment 3</title>
+</head>
+<body>
+SVG Experiment 3: Events: <br />
+
+<!-- SVG -->
+<?xml version="1.0"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+
+<svg>
+<rect id="changeToRed" x="20" y="20" width="25" height="25" rx="5" ry="5" style="fill:lightgrey"/>
+<text x="50" y="35" font-size="14">Move over for red text</text>
+
+<rect id="bigText" x="20" y="60" width="25" height="25" rx="5" ry="5" style="fill:lightgrey"/>
+<text x="50" y="75" font-size="14">Move over for big text</text>
+
+<rect id="bigRedText" x="20" y="100" width="25" height="25" rx="5" ry="5" style="fill:lightgrey"/>
+<text x="50" y="115" font-size="14">Click me for big red text</text>
+
+<text id="changingText" x="250" y="100" font-size="30" fill="black">Change me
+<set attributeName="fill" from="black" to="red" begin="changeToRed.mouseover" end="changeToRed.mouseout"/>
+<set attributeName="font-size" from="14" to="50" begin="bigText.mouseover" end="bigText.mouseout"/>
+<set attributeName="font-size" from="14" to="50" begin="bigRedText.click" end="bigRedText.mouseout"/>
+<set attributeName="fill" from="black" to="red" begin="bigRedText.click" end="bigRedText.mouseout"/>
+</text>
+</svg>
+
+</body>
+</html>

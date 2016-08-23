@@ -1,0 +1,85 @@
+<html>
+  <!-- Experiments with Dijit.Tree to incorporate it into wb.html (whiteboard app)-->
+  <head>
+    <style type="text/css"> body, html { font-family:helvetica,arial,sans-serif; font-size:90%; } </style>
+
+    <!-- <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/claro/claro.css" /> -->
+    <link rel="stylesheet" type="text/css" href="../js/dojo/1.7.1/dijit/themes/claro/claro.css" />
+
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js" djConfig="parseOnLoad: true"> </script> -->
+    <script src="../js/dojo/1.7.1/dojo/dojo.js" data-dojo-config="isDebug:true,parseOnLoad:true"> </script>
+    
+    <script>
+      dojo.require("dojo.data.ItemFileReadStore");
+      dojo.require("dijit.form.Button");
+      dojo.require("dojo.parser");
+      dojo.require("dojo._base.window");
+      dojo.require("dojo.store.Memory");
+      dojo.require("dijit.tree.ForestStoreModel");
+      dojo.require("dijit.tree.TreeStoreModel");
+      dojo.require("dijit.Tree");
+    
+      function selectNode() { classesTree.attr('path', ['Africa', 'Kenya', 'Mombasa']); }
+
+      var fillIt = function() {
+        
+        var myStore = new dojo.data.ItemFileReadStore({ // Create test store, adding the getChildren() method required by ObjectStoreModel
+          identifier: 'id',
+          label: 'name',
+          items: [
+            { id:'root',     name:'root',      type:'planet'},
+            { id:'AF',       name:'Africa',    type:'continent', parent: 'root'},
+            { id:'EG',       name:'Egypt',     type:'country',   parent: 'AF'},
+            { id:'KE',       name:'Kenya',     type:'country',   parent: 'AF'},
+            { id:'Nairobi',  name:'Nairobi',   type:'city',      parent: 'KE'},
+            { id:'Mombasa',  name:'Mombasa',   type:'city',      parent: 'KE'},
+            { id:'SD',       name:'Sudan',     type:'country',   parent: 'AF'},
+            { id:'Khartoum', name:'Khartoum',  type:'city',      parent: 'SD'},
+            { id:'AS',       name:'Asia',      type:'continent', parent: 'world'},
+            { id:'CN',       name:'China',     type:'country',   parent: 'AS'},
+            { id:'IN',       name:'India',     type:'country',   parent: 'AS'},
+            { id:'RU',       name:'Russia',    type:'country',   parent: 'AS'},
+            { id:'MN',       name:'Mongolia',  type:'country',   parent: 'AS'},
+            { id:'OC',       name:'Oceania',   type:'continent', parent: 'world'},
+            { id:'EU',       name:'Europe',    type:'continent', parent: 'world'},
+            { id:'DE',       name:'Germany',   type:'country',   parent: 'EU'},
+            { id:'FR',       name:'France',    type:'country',   parent: 'EU'},
+            { id:'ES',       name:'Spain',     type:'country',   parent: 'EU'},
+            { id:'IT',       name:'Italy',     type:'country',   parent: 'EU'},
+            { id:'NA',       name:'North America', type:'continent', parent: 'world'},
+            { id:'SA',       name:'South America', type:'continent', parent: 'world'}
+          ],
+          getChildren: function(object) { return this.query({parent: object.id}); },
+          root: {id: 'world'}
+        });
+          
+        var myModel = new dijit.tree.TreeStoreModel({ //create the model
+          store: myStore,
+          query: {id: 'world'},
+          root: {id: 'world'}
+        });
+  
+        var tree = new dijit.Tree({ model: myModel }); //create the Tree
+        tree.placeAt(dojo._base.window.body());
+      };    
+    </script>
+  </head>
+
+  <body class=" claro ">
+<!-- --> 
+    <div dojoType="dojo.data.ItemFileReadStore" jsId="classesStore" url="classes.json"> </div>
+    
+    <div dojoType="dijit.tree.ForestStoreModel" jsId="classesModel" store="classesStore"
+      query="{level:'1'}" rootId="classesRoot" rootLabel="Classes"
+      childrenAttrs="children">
+    </div>
+    
+    <div dojoType="dijit.Tree" jsId="classesTree" openOnClick="true" model="classesModel"
+      showRoot="false" persist="false">
+    </div>
+<!-- -->  
+    <div dojoType="dijit.form.Button" onClick="fillIt();">Fill it</div>
+    <div dojoType="dijit.form.Button" onClick="selectNode();">Select node</div>
+    
+  </body>
+</html>

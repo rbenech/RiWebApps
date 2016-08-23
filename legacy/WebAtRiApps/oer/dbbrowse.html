@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!-- 
+     This allows browsing of databases using SM messages via GuruWebBrowser.
+     
+     GuruKeys for this object:
+        ri.sys.ObjClass=WebResource
+        ri.sys.Title=dbbrowse.html
+        ri.sys.Name=dbbrowse
+        ri.sys.FileExt=html
+        ri.sys.MimeType=text/html
+        ri.sys.ObjFormat=html
+        ri.sys.RevisionOf=
+        ri.sys.Version=1
+-->
+
+<!-- -------------------------
+  DbBrowse.html: Part of the database browse web app.
+  This application requires that it be run via GuruWebServer as it uses Guru SM based messaging.
+  
+  History: 
+  8/19/11: initial release
+  ---------------------------  -->
+  
+<html>
+<head>
+ <meta charset="ISO-8859-1">
+ <title>SM based Database Browser</title>
+ <script language="JavaScript" type="text/javascript" src="dbbrowse.js" ></script>
+</head>
+<body>
+ <h3 align="center">Database Browser</h3>
+ <h4 align="center"><div id="div1" class="divStatusc"></div></h4>
+ <br />
+
+ <form name="radioForm" method="get" action="" onsubmit="return false;">
+  <div align="center">
+   <input type="radio" name="dbTypeSel" value="sqliteguru" onClick=setSelectedDbType() >SQlite Guru
+   <input type="radio" name="dbTypeSel" value="sqlite"     onClick=setSelectedDbType() checked>SQlite
+   <input type="radio" name="dbTypeSel" value="postgres"   onClick=setSelectedDbType() >Postgres
+   <input type="radio" name="dbTypeSel" value="db2"        onClick=setSelectedDbType() >DB2
+  </div>
+ </form>
+ <div align="center"> <!--SM format: %1cChannelName%1csubMsg11%1dsubMsg12%1dSubMsg13%1cSubMsg21  -->
+  <button type="button" float="right" onclick="doSendRecSm('%1cdbase%1c%1ddrivername%1dorg.sqlite.JDBC')">Load Driver</button>
+  <button type="button" float="right" onclick="doSendRecSm('%1cdbase%1c%1dconnect%1djdbc:sqlite:test.db')">Connect</button>
+  <button type="button" float="right" onclick="doSendRecSm('%1cdbase%1cupdate%1dINSERT INTO people(name,occupation,age,school) VALUES(\'Jimbob\',\'welder\',\'47\',\'BHS\')')">Update</button>
+  <button type="button" float="right" onclick="doQuery('%1cdbase%1cquery%1dSELECT * FROM people')">Query</button>
+  <button type="button" float="right" onclick="readSm()">Read</button>
+ </div>
+
+ <hr />
+ <!--Debug messages-->
+ <div id="divDebug" align="center"></div> 
+
+ <!--Query results-->
+ <h3 align="center">Results:</h3>
+ <div id="divResult" align="center"></div> 
+ <br />
+</body>
+</html>

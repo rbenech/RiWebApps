@@ -1,0 +1,38 @@
+{
+  identifier: 'name',
+  label: 'name',
+  items: [
+    { name:'Africa', level:'1', children: [ { _reference:'Egypt' }, { _reference:'Kenya' }, { _reference:'Sudan'} ] },
+    { name:'Asia', level:'1', children:[ { _reference:'China' }, { _reference:'India' }, { _reference:'Russia' }, { _reference:'Mongolia' } ] },
+    { name:'Oceania', level:'1', children:{_reference:'Australia'}},
+    { name:'Europe', level:'1', children:[ {_reference:'Germany'}, {_reference:'France'}, {_reference:'Spain'}, {_reference:'Italy'} ] },
+    { name:'North America', level:'1', children:[{_reference:'Mexico'}, {_reference:'Canada'}, {_reference:'USA'} ] },
+    { name:'South America', level:'1', children:[{_reference:'Brazil'}, {_reference:'Argentina'}] },
+
+    { name:'Egypt' },
+    { name:'Kenya', children:[ { _reference:'Nairobi' }, { _reference:'Mombasa'} ] },
+    { name:'Sudan', children: { _reference:'Khartoum' } },
+    { name:'China' },
+    { name:'India' },
+    { name:'Russia' },
+    { name:'Mongolia' },
+    { name:'Australia' },
+    { name:'Germany' },
+    { name:'France' },
+    { name:'Spain' },
+    { name:'Italy' },
+    { name:'Mexico',  children:[ {_reference:'Mexico City'}, {_reference:'Guadalajara'} ] },
+    { name:'Canada', children:[{_reference:'Ottawa'}, {_reference:'Toronto'}] },
+    { name:'USA' },
+    { name:'Brazil' },
+    { name:'Argentina' },
+
+    { name:'Nairobi' },
+    { name:'Mombasa' },
+    { name:'Khartoum' },
+    { name:'Mexico City' },
+    { name:'Guadalajara' },
+    { name:'Ottawa' },
+    { name:'Toronto' }
+  ]
+}
