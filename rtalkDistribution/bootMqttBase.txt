@@ -1,0 +1,11 @@
+CTZGJ8
+:INFO
+guru 
+logWindow
+logSm
+admin
+appTitle=Rtalk v1
+:ACTIONS,handler=RtAppLoader
+async,topic=admin/monitor/1,^+channel=whiteboard+className=rtalk.whiteboard.SmPortalWhiteboard
+async,topic=admin/app/1,+runLocal+channel=transcript+className=rtalk.TranscriptPortal
+async,topic=transcript/register/1^+button+text=guru^+actionTopic=admin/app/1+actionMap=~runLocal~className=rtalk.guruBrowserPortal
