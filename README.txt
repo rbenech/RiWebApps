@@ -1,5 +1,5 @@
 RiWebApps
 
-Requires Node.js v4 or v6
+For Roos Instruments apps that run in a web browser.
 
-npm install flux
+Requires Node.js v4 or v6
