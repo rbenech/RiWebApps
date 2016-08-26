@@ -1,8 +1,0 @@
-/* CSS style sheet for html/javascript rtalk client application */
-
-/*For html menu buttons*/
-input.menuButn { 
-   color:#050; 
-   font: bold small 'trebuchet ms',helvetica,sans-serif;
-   width:125px; 
-}
