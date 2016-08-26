@@ -7,5 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Roos Instruments",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cbor": "^1.0.6"
+	"mqtt": "^4.5.0"
+  }
 }
