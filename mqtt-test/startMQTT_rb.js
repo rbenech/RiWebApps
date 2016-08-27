@@ -44,8 +44,10 @@ client.on('message', function (topic, message) {
   if (topic.toString()=="admin/cell/cellinfo/info/1") {
 	var cellID = message.toString();
 	cellID = cellID.substr(cellID.length - 8);
-	client.subscribe(clientID+"/"+cellID + '/whiteboard/createSubscriber/1');
-	console.log('Subscribed to '+ clientID+"/"+cellID + '/whiteboard/createSubscriber/1');
+	topic = clientID+"/"+cellID + '/whiteboard/createSubscriber/1';
+	client.subscribe(topic);
+	console.log('NOW Subscribed to '+ clientID+"/"+cellID + '/whiteboard/createSubscriber/1');
+	client.publish(cbor.encode('@dviewJTranscript'));
   }
   if (message.toString()=="end") {
 	client.end();
