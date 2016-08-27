@@ -5,16 +5,23 @@
   ------------------------------------------------------------------------------------------
 */
 
-var GuruServer = '192.168.1.143';
 
 var mqtt    = require('mqtt');
-var client  = mqtt.connect('mqtt:'+ GuruServer);
- 
-client.on('connect', function () {
-  client.subscribe('presence');
-  client.publish('presence', 'Hello mqtt');
+var client  = mqtt.connect('mqtt://localhost:1883');
+
+//Emit error if can't connect
+client.on('error', function(error) {
+  console.log('Client not connected.');
 });
- 
+
+// Create a client connection
+client.on('connect', function () {
+  client.subscribe('admin');
+});
+
+
+// subscribe to a topic
+
 client.on('message', function (topic, message) {
   // message is Buffer 
   console.log(message.toString());

@@ -9,7 +9,10 @@
   "author": "Roos Instruments",
   "license": "ISC",
   "dependencies": {
-    "cbor": "^1.0.6"
-	"mqtt": "^4.5.0"
+    "browserify": "^13.1.0",
+    "cbor": "^1.0.6",
+    "mqtt": "^4.5.0",
+    "source-map-support": "^0.4.2",
+    "watchify": "^3.7.0"
   }
 }
