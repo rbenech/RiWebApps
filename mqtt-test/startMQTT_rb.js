@@ -49,8 +49,7 @@ client.on('message', function (topic, message) {
 	cellID = topic.toString();
 	cellID = cellID.substr(9,8);
 	topic = clientID+"/"+cellID + '/whiteboard/createSubscriber/1';
-	client.subscribe(topic);
-	console.log('NOW Subscribed to '+ clientID+"/"+cellID + '/whiteboard/createSubscriber/1');
+	console.log('Publish to '+ clientID+"/"+cellID + '/whiteboard/createSubscriber/1');
 	client.publish(topic,cbor.encode('@dviewJTranscript'),{qos:2});
   }
   if (topic.toString()=="admin/cell/cellinfo/info/1") {
