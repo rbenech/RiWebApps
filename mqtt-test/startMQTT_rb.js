@@ -19,7 +19,7 @@ var options = {
 	clientId: 'js' + clientID
 	};
  
-var client  = mqtt.connect('mqtt://192.168.1.159:1883', options);
+var client  = mqtt.connect('mqtt://192.168.1.159:8080', options);
 
 client.on('connect', function () {
  client.subscribe('+/+/' + clientID + '/#');
