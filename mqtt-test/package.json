@@ -2,17 +2,40 @@
   "name": "mqtt-test",
   "version": "0.0.1",
   "description": "MQTT interface to Guru",
+  "author": "Roos Instruments",
   "main": "startMQTT.js",
+  
+  "respository": {
+    "type": "git",
+    "url": "https://github.com/rbenech/RiWebApps"
+  },
+  
+  "bugs": {
+    "url": "https://github.com/rbenech/RiWebApps/issues"
+  },
+  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Roos Instruments",
-  "license": "ISC",
+  
   "dependencies": {
-    "browserify": "^13.1.0",
     "cbor": "^1.0.6",
     "mqtt": "^4.5.0",
-    "source-map-support": "^0.4.2",
-    "watchify": "^3.7.0"
-  }
+    "react": "^15.3.1",
+    "flux": "^2.1.1",
+    "watchify": "^3.7.0",
+    "source-map-support": "^0.4.2"
+  },
+  
+  "keywords": [
+    "whiteboard",
+    "rtalk",
+    "guru",
+    "mqtt"
+  ],
+  
+  "private": "true",
+  "preferGlobal": "false",
+  "analyse": "true",
+  "license": "unlicense"
 }

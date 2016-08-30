@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------------------------
-  startMQTT.js.
+  startMQTT_rb.js.
   MQTT connection to RI Guru with Node.js for JS apps
   08/25/16 Ryan Benech
   ------------------------------------------------------------------------------------------
@@ -11,32 +11,21 @@ console.log('Unique Client ID is '+ clientID);
 
 var mqtt    = require('mqtt');
 var cbor	= require('cbor');
+var pubMsg = new Map();
+pubMsg.set('view', 'Browser');
+encodedMsg = cbor.encode(pubMsg);
+
 var options = {
 	clientId: 'js' + clientID
 	};
-
-var client  = mqtt.connect('mqtt://localhost:1883', options);
+ 
+var client  = mqtt.connect('mqtt://192.168.1.159:1883', options);
 
 client.on('connect', function () {
- // client.subscribe(clientID+'//cellinfo/#');
- client.subscribe('+/+/whiteboard/#');
- //client.subscribe('admin/#'); //hacky way
- // client.subscribe(clientID +'/X0M17536/whiteboard/createSubscriber/1',{qos:2});
- // client.subscribe(clientID +'/whiteboard/createSubscriber/1',{qos:2});
- // client.subscribe('////createSubscriber/1');
- // client.subscribe('///whiteboard/createSubscriber/1');
-  //client.subscribe('updateGuru/#');
- //client.publish('admin/cell/cellinfo/info/1',cbor.encode('iadminInfofcellIdHX0M17536'));
-  //console.log('publish message:'+ cbor.encode('iadminInfofcellIdHX0M17536'));
- // '+/+/whiteboard/#', QOS 2
- // '%CliendID%/%CellID%/whiteboard/createSubscriber/1' --> first token to subscribe
- // 'reply address / cell id / channel / api / messageID'... 'view=config'
-//	'unique string made from me'
-//	'cellid = ' subscribe ''
- // 'listed to messages that are objects'
- // 
+ client.subscribe('+/+/' + clientID + '/#');
+ client.publish(clientID + '/X007E0X2/GURUBROWSER/subscribe/1', encodedMsg);
 });
-
+console.log(clientID + '/X007E0X2/GURUBROWSER/subscribe/1', encodedMsg)
 client.on('error', function(err) {
 	console.log("Error: " + err.toString());
 });
