@@ -1,3 +1,5 @@
+TITLE Moquette
+
 @ECHO OFF
 rem #
 rem # Copyright (c) 2012-2015 Igor Yova
