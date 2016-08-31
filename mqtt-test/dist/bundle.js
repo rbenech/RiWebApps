@@ -21993,7 +21993,7 @@ function amdefine(module, requireFn) {
 
 module.exports = amdefine;
 
-}).call(this,require('_process'),"/..\\Dropbox\\RiWebApps\\mqtt-test\\node_modules\\source-map-support\\node_modules\\source-map\\node_modules\\amdefine\\amdefine.js")
+}).call(this,require('_process'),"/mqtt-test\\node_modules\\source-map-support\\node_modules\\source-map\\node_modules\\amdefine\\amdefine.js")
 },{"_process":12,"path":11}],103:[function(require,module,exports){
 (function (process,Buffer){
 var SourceMapConsumer = require('source-map').SourceMapConsumer;
@@ -24676,11 +24676,12 @@ function extend() {
 
 },{}],117:[function(require,module,exports){
 /*-----------------------------------------------------------------------------------------
-  startMQTT.js.
+  startMQTT_rb.js.
   MQTT connection to RI Guru with Node.js for JS apps
   08/25/16 Ryan Benech
   ------------------------------------------------------------------------------------------
 */
+
 var clientID = Math.random().toString(16).substr(2, 8);
 var cellID;
 
@@ -24688,60 +24689,48 @@ console.log('Unique Client ID is '+ clientID);
 
 var mqtt    = require('mqtt');
 var cbor	= require('cbor');
+
+var pubMsg = new Map();
+var encodedMsg;
+var adminChannel = 'admin/cell/cellinfo/info/1';
+
 var options = {
 	clientId: 'js' + clientID
-	};
-
-var client  = mqtt.connect('mqtt://localhost:1883', options);
+};
+ 
+var client  = mqtt.connect('mqtt://localhost:8080', options);
 
 client.on('connect', function () {
- // client.subscribe(clientID+'//cellinfo/#');
- client.subscribe('+/+/whiteboard/#');
- //client.subscribe('admin/#'); //hacky way
- // client.subscribe(clientID +'/X0M17536/whiteboard/createSubscriber/1',{qos:2});
- // client.subscribe(clientID +'/whiteboard/createSubscriber/1',{qos:2});
- // client.subscribe('////createSubscriber/1');
- // client.subscribe('///whiteboard/createSubscriber/1');
-  //client.subscribe('updateGuru/#');
- //client.publish('admin/cell/cellinfo/info/1',cbor.encode('iadminInfofcellIdHX0M17536'));
-  //console.log('publish message:'+ cbor.encode('iadminInfofcellIdHX0M17536'));
- // '+/+/whiteboard/#', QOS 2
- // '%CliendID%/%CellID%/whiteboard/createSubscriber/1' --> first token to subscribe
- // 'reply address / cell id / channel / api / messageID'... 'view=config'
-//	'unique string made from me'
-//	'cellid = ' subscribe ''
- // 'listed to messages that are objects'
- // 
+	
+//Finding cellID	
+ client.subscribe(adminChannel, {qos: 2});
+ client.unsubscribe(adminChannel);
+ 
+ client.subscribe('+/+/' + clientID + '/#', {qos: 2});
+ 
+});
+
+client.on('message', function (topic, message) {
+	var cborMsg = cbor.decode(message);
+	 if (adminChannel == topic) { //registering cellID
+		cellID = cborMsg.toString().substr(cborMsg.toString().length - 8);
+		console.log('CellID: ', cellID);
+		
+		pubMsg.set('view', 'Browser');
+		var encodedMsg = cbor.encode(pubMsg);
+		client.publish(clientID + '/' + cellID + '/GURUBROWSER/subscribe/1', encodedMsg);
+	} else {
+		console.log(cbor.decodeAllSync(message));
+	};
+  if (message.toString()=="end") {
+	 client.unsubscribe('+/+/' + clientID + '/#');
+	client.end();
+  }
+  console.log(topic.toString() + "\n" + 'Cbor decode: ', cborMsg);
 });
 
 client.on('error', function(err) {
 	console.log("Error: " + err.toString());
-});
-
-client.on('message', function (topic, message) {
-  // message is Buffer
-  var flag = topic.toString();
-  flag = flag.substr(flag.length - 30);
-  if (flag=="/whiteboard/createSubscriber/1") {
-	cellID = topic.toString();
-	cellID = cellID.substr(9,8);
-	topic = clientID+"/"+cellID + '/whiteboard/createSubscriber/1';
-	client.subscribe(topic);
-	console.log('NOW Subscribed to '+ clientID+"/"+cellID + '/whiteboard/createSubscriber/1');
-	client.publish(topic,cbor.encode('@dviewJTranscript'),{qos:2});
-  }
-  if (topic.toString()=="admin/cell/cellinfo/info/1") {
-	cellID = message.toString();
-	cellID = cellID.substr(cellID.length - 8);
-	topic = clientID+"/"+cellID + '/whiteboard/createSubscriber/1';
-	client.subscribe(topic);
-	console.log('NOW Subscribed to '+ clientID+"/"+cellID + '/whiteboard/createSubscriber/1');
-	client.publish(cbor.encode('@dviewJTranscript'));
-  }
-  if (message.toString()=="end") {
-	client.end();
-  }
-  console.log(topic.toString() + "\n" + message.toString());
 });
 
 },{"cbor":47,"mqtt":76}]},{},[117]);
