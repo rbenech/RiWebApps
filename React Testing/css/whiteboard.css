@@ -1,0 +1,19 @@
+.ListPane {
+    box-sizing: border-box;
+    border: 1px solid #084AA1;
+
+}
+
+.GroupPane {
+
+
+}
+
+.TextPane {
+background-color: #F0F0F0;
+}
+
+.Button {
+    box-sizing: border-box;
+    border: 1px solid #084AA1;
+}
