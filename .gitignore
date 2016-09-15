@@ -1,3 +1,4 @@
 mqtt-test/dist/bundle.js
 rtalkDistribution/moquette/bin/moquette.log.1
-mqtt-test/dist/bundle.js
+mqtt-test\dist\bundle.js
+rtalkDistribution\moquette\bin\moquette.log.1
