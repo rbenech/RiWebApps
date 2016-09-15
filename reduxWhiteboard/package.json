@@ -1,0 +1,34 @@
+{
+  "name": "redux-whiteboard",
+  "version": "0.0.1",
+  "description": "Redux whiteboard interface to Guru",
+  "author": "Roos Instruments",
+  "main": "startRedux.js",
+  "respository": {
+    "type": "git",
+    "url": "https://github.com/rbenech/RiWebApps"
+  },
+  "bugs": {
+    "url": "https://github.com/rbenech/RiWebApps/issues"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+  },
+  "keywords": [
+    "whiteboard",
+    "rtalk",
+    "guru",
+    "mqtt"
+  ],
+  "private": "true",
+  "preferGlobal": "false",
+  "analyse": "true",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rbenech/RiWebApps.git"
+  },
+  "homepage": "https://github.com/rbenech/RiWebApps#readme"
+}

@@ -24682,44 +24682,6 @@ function extend() {
   ------------------------------------------------------------------------------------------
 */
 
- /**Recursively expands the given item for display purposes*/
-  var getObjAsString = function(someObj) {
-    var ndx, type, a;
-  
-    if(true){
-      type = Object.prototype.toString.call(someObj); 
-      if(type === '[object Array]') {
-        a='[';
-        for(ndx=0; ndx<someObj.length; ndx++) {
-          a+=' '+getObjAsString(someObj[ndx]);
-        }
-        a+=']';
-        return a;
-      }
-      else if(type === '[object Object]') { //else if('[object Object]'==someObj) { //this also works (note == not ===)
-        a='{';
-        for(ndx in someObj) {
-          if(someObj.hasOwnProperty(ndx)) {
-            a+=' '+ndx+':'+getObjAsString(someObj[ndx]);
-          }
-        }
-        a+='}';
-        return a;
-      }
-      else return someObj;
-    }
-    else { //i.e. no object expansion
-      type = Object.prototype.toString.call(someObj); 
-      if(type === '[object Array]') {
-        return '[' +someObj + ']';
-      }
-      else if(type === '[object Object]') { //else if('[object Object]'==someObj) { //this also works (note == not ===)
-        return '{' +someObj + '}';
-      }
-      else return someObj;
-    }
-  };
-
 var clientID = Math.random().toString(16).substr(2, 8);
 var cellID;
 
@@ -24765,7 +24727,6 @@ client.on('message', function (topic, message) {
 	client.end();
   }
   console.log(topic.toString() + "\n" + 'Cbor decode: ', cborMsg);
-  console.log(topic.toString() + "\n" + 'Objects: ', getObjAsString(cborMsg) );
 });
 
 client.on('error', function(err) {

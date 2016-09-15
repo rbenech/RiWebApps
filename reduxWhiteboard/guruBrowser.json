@@ -1,0 +1,288 @@
+{"toppane":
+	{
+		"__comment":"nested objects as rendered by owner=identifier",
+		"_kind": "toppane",
+		"label": "Guru Browser for latest on local",
+		"identifier": "top",
+		"type": "viewModel",
+		"windowSize": "100@80",
+		"model": ".identifier",
+		"subpane": [{
+			"_kind": "subpane",
+			"class": "ListPane",
+			"owner": "top",
+			"frameRatio": "0@95;20@65",
+			"identifier": "key1",
+			"enableEvent": ["getMenu", "select"],
+			"selector": "selectKey1",
+			"menu" : {
+				"_kind": "menu",
+				"owner": "key1",
+				"identifier": "keysMenu",
+				"selector": "menuKeys",
+				"_items": {
+					"addListItem":[
+						{
+							"_comment": "un-nest add list items to have tag at same level as _name",
+							"_name": "Key1=Class",
+							"tag": "4002"
+						},
+						{
+							"_name": "Key1=Copies",
+							"tag": "4003"
+						},
+		
+						{
+							"_name": "Scope=Local",
+							"tag": "4004"
+						},
+						{
+							"_name":"Scope=Update",
+							"tag": "4005"
+						},
+						{
+							"_name":"Scope=All",
+							"tag": "4006"
+						}
+					]
+				}
+			}
+		},
+			{
+				"_kind": "subpane",
+				"class": "Button",
+				"owner": "top",
+				"contents": "none",
+				"frameRatio": "0@100;20@95",
+				"foreColor": "1",
+				"enableEvent": "select",
+				"selected": "true",
+				"selector": "PromptForKey1",
+				"identifier": "15"
+			},
+			{
+				"_kind": "subpane",
+				"class": "ListPane",
+				"owner": "top",
+				"frameRatio": "20@95;40@65",
+				"identifier": "key2",
+				"selector": "selectKey2",
+				"enableEvent": ["getMenu", "select"]
+			},
+			{
+				"_kind": "subpane",
+				"class": "Button",
+				"owner": "top",
+				"contents": "none",
+				"frameRatio": "20@100; 40@95",
+				"enableEvent": "select",
+				"foreColor": "1",
+				"selector": "promptForKey2",
+				"identifier": "16",
+				"seleced": "true"
+			},
+		
+			{
+				"_kind": "subpane",
+				"class": "ListPane",
+				"owner": "top",
+				"frameRatio": "40@100;100@60",
+				"identifier": "title",
+				"selector": "selectTitle",
+				"enableEvent": ["getMenu", "select"],
+				"menu": {
+						"_kind": "menu",
+						"owner": "title",
+						"identifier": "objectsMenu",
+						"selector": "menuObjects",
+						"value": {
+							"addListItem": [{
+									"Launch": {
+										"tag": "4011"
+									}
+								},
+				
+								{
+									"Edit": {
+										"tag": "4010"
+									}
+								},
+				
+								{
+									"Show Latest": {
+										"tag": "4012"
+									}
+								},
+				
+								{
+									"Show All": {
+										"tag": "4013"
+									}
+								},
+				
+								{
+									"Select All": {
+										"tag": "4014"
+									}
+								},
+				
+								{
+									"Make Current": {
+										"tag": "4017"
+									}
+								},
+				
+								{
+									"Delete": {
+										"tag": "4015"
+									}
+								},
+				
+								{
+									"Remove from Local": {
+										"tag": "4016"
+									}
+								}
+				
+							]
+						}
+					}
+			},
+			{
+				"_kind": "subpane",
+				"class": "TextPane",
+				"owner": "top",
+				"frameRatio": "0@60; 100@0",
+				"identifier": "text",
+				"font": "~LucindaTypewriterRegular~plain~14",
+				"menu" : {
+							"_kind": "menu",
+							"owner": "text",
+							"identifier": "textMenu",
+							"value": {
+					
+								"addListItem": [{
+										"Cut": {
+											"tag": "1001"
+										}
+									},
+					
+									{
+										"Copy": {
+											"tag": "1002"
+										}
+									},
+					
+									{
+										"Select All": {
+											"tag": "1005"
+										}
+									},
+					
+									{
+										"Word Wrap": {
+											"tag": "1006"
+										}
+									},
+					
+									{
+										"Find/Replace": {
+											"tag": "1007"
+										}
+									},
+					
+									{
+										"Find Again": {
+											"tag": "1008"
+										}
+									}
+								]
+							}
+						}
+			},
+		
+			{
+				"_kind": "subpane",
+				"class": "GroupPane",
+				"owner": "top",
+				"frameRatio": "0@65;20@60",
+				"identifier": "5",
+				"subpane": [
+					{
+					"_kind": "subpane",
+					"class": "Button",
+					"owner": "5",
+					"contents": "Keys",
+					"frameRatio": "0@100;33@0",
+					"selected": "true",
+					"enableEvent": "select",
+					"selector": "selectTitle",
+					"selectionGroup": "~12~11",
+					"identifier": "10"
+					},
+					{
+						"_kind": "subpane",
+						"class": "Button",
+						"owner": "5",
+						"contents": "Partial",
+						"frameRatio": "33@100;66@0",
+						"selector": "selectTitle",
+						"enableEvent": "select",
+						"selectionGroup": "~12~10",
+						"identifier": "11"
+					},
+					{
+						"_kind": "subpane",
+						"class": "Button",
+						"owner": "5",
+						"contents": "All",
+						"frameRatio": "66@100;100@0",
+						"selector": "selectTitle",
+						"enableEvent": "select",
+						"selectionGroup": "~10~11",
+						"identifier": "12"
+					}
+				]
+			},
+			{
+				"_kind": "subpane",
+				"class": "GroupPane",
+				"owner": "top",
+				"frameRatio": "20@65;40@60",
+				"identifier": "6",
+				"subpane": [
+					{
+						"_kind": "subpane",
+						"class": "Button",
+						"owner": "6",
+						"contents": "Name",
+						"frameRatio": "0@100;50@0",
+						"selector": "selectKey2",
+						"enableEvent": "select",
+						"selectionGroup": "~14",
+						"identifier": "13"
+					},
+					{
+						"_kind": "subpane",
+						"class": "Button",
+						"owner": "6",
+						"contents": "Title",
+						"frameRatio": "50@100;100@0",
+						"selected": "true",
+						"selector": "selectKey2",
+						"enableEvent": "select",
+						"selectionGroup": "~13",
+						"identifier": "14"
+					}
+					]
+			}
+			]
+	},
+	"attribute":
+		{
+			"_kind": "attribute",
+			"scope": "local",
+			"range": "latest"
+		},
+	"command": "createView"
+}
