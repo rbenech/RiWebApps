@@ -1,4 +1,2 @@
-TITLE startWin64
-
 @REM Rtalk Startup - Win64 version
 @java -cp RtalkOpen.jar;jars/* rtalk.RtalkMqttLauncher updateGuruChannel=updateGuru boot=bootRtalk.txt
